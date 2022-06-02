@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import MainApp from './src';
+import useCachedResources from 'src/hooks/useCachedResources';
+import { Provider } from 'react-redux';
+import { store } from 'src/redux/store';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const App = () => {
+  const isLoadingComplete = useCachedResources();
+
+  if(!isLoadingComplete) {
+    return null
+  } else {
+    return (
+        <MainApp/>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const AppWrapper = () => {
+  return(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
+
+export default AppWrapper
+
