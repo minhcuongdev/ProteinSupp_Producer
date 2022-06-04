@@ -43,7 +43,7 @@ const useCachedResources = () => {
           "Poppins-SemiBold": require("src/assets/fonts/Poppins-SemiBold.ttf"),
         });
 
-        // await checkHasBeenLogin();
+        await checkHasBeenLogin();
       } catch (err) {
         console.log(err);
       } finally {

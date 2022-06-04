@@ -9,11 +9,14 @@ import Color from 'src/constants/Color'
 import UtilsCard from 'src/components/UtilsCard/UtilsCard'
 import FollowOrderCard from 'src/components/FollowOrderCard/FollowOrderCard'
 import StatisticCard from 'src/components/StatisticCard/StatisticCard.jsx'
+import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 import { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons, Fontisto, Entypo } from '@expo/vector-icons';
 
 const HomePage = () => {
-  const showImage = true
+  const user = useSelector(state => state.account.account)
+  const navigation = useNavigation();
 
   const UtilsCardList = [{
     id: 0,
@@ -28,7 +31,7 @@ const HomePage = () => {
     nameIcon: "md-trash-bin-sharp",
     sizeIcon: 30,
     title: "Product",
-    onTap: () => {console.log("Product")}
+    onTap: () => {navigation.navigate("Products")}
   },{
     id: 2,
     Icon: FontAwesome5,
@@ -77,7 +80,7 @@ const HomePage = () => {
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
           <Pressable onPress={() => {}}>
-            {showImage ?
+            {user.profilePicture ?
               <Image source={{
                 uri: "https://i.ibb.co/4pfzCQt/minhcuongdev.jpg"
               }} style={styles.avatar} />
