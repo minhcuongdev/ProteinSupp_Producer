@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     maxWidth: 200,
     marginRight: 10,
-    marginVertical: 5
+    marginVertical: 5,
+    minWidth: 100
   },
   text: {
     fontSize: 12,

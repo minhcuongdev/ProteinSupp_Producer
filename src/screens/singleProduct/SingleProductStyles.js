@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   priceAndTitle:{
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 10
+    marginVertical: 10,
+    alignItems: "flex-end"
   },
   productContainer:{
     width: "100%"

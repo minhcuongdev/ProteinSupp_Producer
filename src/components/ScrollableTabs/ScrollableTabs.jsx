@@ -21,6 +21,54 @@ const ItemButton = ({ title, isActive, id, action }) => {
   )
 }
 
+export const ScrollableOrderTabs = ({index, setIndex}) => {
+  const categories = [{
+    id: 0,
+    title: "All",
+    isActive: true
+  }, {
+    id: 1,
+    title: "Preparing",
+    isActive: false
+  }, {
+    id: 2,
+    title: "Delivering",
+    isActive: false
+  }, {
+    id: 3,
+    title: "Delivered",
+    isActive: false
+  }, {
+    id: 4,
+    title: "Cancel",
+    isActive: false
+  },]
+
+  const ref = useRef(null)
+
+  useEffect(() => {
+    ref.current?.scrollToIndex({
+      index,
+      animated: true,
+      viewPosition: 0.4      
+    })
+  }, [index])
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        ref={ref}
+        initialScrollIndex={index}
+        data={categories}
+        renderItem={({ item, index: fIndex }) => <ItemButton id={fIndex} action={setIndex} title={item.title} isActive={index === fIndex ? true : false} />}
+        keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
+  )
+}
+
 const ScrollableTabs = ({index, setIndex}) => {
   const categories = [{
     id: 0,

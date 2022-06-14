@@ -8,70 +8,8 @@ import ProductCard from 'src/components/Card/ProductCard'
 import { useNavigation } from '@react-navigation/native';
 import productApi from 'src/apis/productApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProducts, setPromotionalProducts } from 'src/redux/slices/productSlice'
 import { setSnackBar } from 'src/redux/slices/snackBarSlice';
-
-const productDummy = [
-  {
-    id: 0,
-    nameProduct: "Labrada Leanbody For Her",
-    price: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 1,
-    nameProduct: "Labrada Leanbody For Her",
-    price: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 2,
-    nameProduct: "Labrada Leanbody For Her",
-    price: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 3,
-    nameProduct: "Labrada Leanbody For Her",
-    price: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 4,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  }, {
-    id: 5,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 6,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 7,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 8,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  },
-  {
-    id: 9,
-    nameProduct: "Labrada Leanbody For Her",
-    priceProduct: "3.500.000",
-    uri: "..."
-  },
-]
+import { setProducts } from 'src/redux/slices/productSlice';
 
 const Product = () => {
   const [indexCategory, setIndexCategory] = useState(0)
@@ -79,16 +17,15 @@ const Product = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
   const products = useSelector(state => state.product.products)
+  const [refreshing,setRefreshing] = useState(false)
 
   const callApi = async () => {
     try {
       const products = await productApi.getAllProduct()
 
-      const promotionalProduct = products.filter(product => product.promotional)
       dispatch(setProducts(products))
-      dispatch(setPromotionalProducts(promotionalProduct))
-      
-      const proteinGainWeight = products.filter(product => product?.typeProduct.includes("Protein & gain weight"))
+            
+      const proteinGainWeight = products.filter(product => product?.typeProduct.includes("Protein & Gain weight"))
       setProductCategory(proteinGainWeight)
 
     } catch (error) {
@@ -105,12 +42,12 @@ const Product = () => {
 
   useEffect(() => {
     renderCategoryProducts()
-  },[indexCategory])
+  },[indexCategory, products])
 
   const renderCategoryProducts = () => {
     switch (indexCategory) {
       case 0:
-        const proteinGainWeight = products.filter(product => product?.typeProduct.includes("Protein & gain weight"))
+        const proteinGainWeight = products.filter(product => product?.typeProduct.includes("Protein & Gain weight"))
         setProductCategory(proteinGainWeight)
         break
       case 1:
@@ -132,7 +69,7 @@ const Product = () => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={{marginTop: 10}}>
         <ScrollableTabs index={indexCategory} setIndex={setIndexCategory} />
       </View>
       <View style={styles.body}>
@@ -142,6 +79,8 @@ const Product = () => {
           keyExtractor={item => item._id}
           showsVerticalScrollIndicator={false}
           numColumns={2}
+          refreshing={refreshing}
+          onRefresh={() => callApi()}
         />
       </View>
       <FAB

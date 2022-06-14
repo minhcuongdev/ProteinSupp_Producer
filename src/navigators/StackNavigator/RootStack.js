@@ -5,6 +5,7 @@ import Product from "src/screens/product/Product";
 import NewProduct from "src/screens/product/NewProduct";
 import SingleProduct from "src/screens/singleProduct/SingleProduct";
 import EditProduct from "src/screens/product/EditProduct";
+import OrderDetail from "src/screens/OrderDetail/OrderDetail";
 
 import RootTab from "../TabNavigator/RootTab";
 import { useSelector } from "react-redux";
@@ -34,6 +35,7 @@ const RootStackNavigator = () => {
           />
           <Stack.Screen name="Products" component={Product} />
           <Stack.Screen name="Create new product" component={NewProduct} />
+          <Stack.Screen name="Order Detail" component={OrderDetail} />
           <Stack.Screen
             name="SingleProduct"
             component={SingleProduct}

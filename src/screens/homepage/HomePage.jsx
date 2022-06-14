@@ -82,15 +82,15 @@ const HomePage = () => {
           <Pressable onPress={() => {}}>
             {user.profilePicture ?
               <Image source={{
-                uri: "https://i.ibb.co/4pfzCQt/minhcuongdev.jpg"
+                uri: user.profilePicture
               }} style={styles.avatar} />
               :
               <Image source={defaultImage} style={styles.avatar} />
             }
           </Pressable>
           <View style={styles.textWrapper}>
-            <MyText title={"Good morning!"} variant="h4" color={Color.PRIMARY_YELLOW_COLOR} style={{ textAlign: "left" }} />
-            <MyText title={"Tran Minh Cuong"} numberOfLines={2} variant="body1" color={Color.PRIMARY_YELLOW_COLOR} style={{ lineHeight: 27, width: 250, textAlign: "left", fontSize: 20 }} />
+            <MyText title={"Welcome Back!"} variant="h4" color={Color.PRIMARY_YELLOW_COLOR} style={{ textAlign: "left" }} />
+            <MyText title={user.username} numberOfLines={2} variant="body1" color={Color.PRIMARY_YELLOW_COLOR} style={{ lineHeight: 27, width: 250, textAlign: "left", fontSize: 20 }} />
           </View>
         </View>
         <View style={{marginTop:  20}}>

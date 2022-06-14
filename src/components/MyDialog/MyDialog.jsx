@@ -17,7 +17,9 @@ const MyDialog = ({ content, titleButton, isVisibleDialog, handleOnPress }) => {
         <MyText title={content} numberOfLines={2} variant="h2" color={Color.PRIMARY_YELLOW_COLOR} />
       </View>
       <View style={styles.buttonContainer}>
-        <PrimaryButton title={titleButton} style={styles.button} handleOnPress={() => handleOnPress()} />
+        <View style={{width: "70%"}}>
+          <PrimaryButton title={titleButton} style={styles.button} handleOnPress={() => handleOnPress()} />
+        </View>
       </View>
     </Dialog>
   )
@@ -43,5 +45,14 @@ export const MyDialogConfirm = ({ content, isVisibleDialog, submit, cancel }) =>
     </Dialog>
   )
 }
+
+export const MyDialogLoading = ({isVisible}) => {
+  return(
+    <Dialog isVisible={isVisible} >
+      <Dialog.Loading />
+    </Dialog>
+  )
+}
+
 
 export default MyDialog

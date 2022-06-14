@@ -6,9 +6,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.WHITE,
     paddingHorizontal: 25,
-    paddingTop: 20
+    paddingTop: 5
   },
   body: {
+    flex: 1,
     marginTop: 15,
     flexWrap: "wrap",
   },
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   imageWrapper: {
-    marginVertical: 20
+    marginVertical: 15
   },
   imageButton: {
     padding: 10,
