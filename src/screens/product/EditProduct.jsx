@@ -9,13 +9,15 @@ import Color from 'src/constants/Color'
 import Counter from 'src/components/Counter/Counter'
 import PrimaryButton from 'src/components/PrimaryButton/PrimaryButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import MyDialog from 'src/components/MyDialog/MyDialog'
+import MyDialog, { MyDialogLoading } from 'src/components/MyDialog/MyDialog'
 import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProductById } from 'src/redux/slices/productSlice'
+import { getProductById, updateProduct } from 'src/redux/slices/productSlice'
 import * as ImagePicker from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
+import productApi from 'src/apis/productApi'
+import { setSnackBar } from 'src/redux/slices/snackBarSlice'
 
 const EditProduct = () => {
   const navigation = useNavigation()
@@ -36,6 +38,7 @@ const EditProduct = () => {
   const [manufacturerPrice, setManufacturerPrice] = useState(`${product.manufacturerPrice}`)
   const [image,setImage] = useState(product.imageProduct)
   const [quantityCurrent, setQuantityCurrent] = useState(50)
+  const [loading,setLoading] = useState(false)
 
   const [isVisibleDialog, setIsVisibleDialog] = useState(false);
   const toggleDialog = () => {
@@ -53,7 +56,37 @@ const EditProduct = () => {
     if (!result.cancelled) {
       setImage(result.uri)
     }
+  }
 
+  const callApi = async (payload) => {
+    setLoading(true)
+    try {
+      const response = await productApi.updateProduct(productId,payload)
+      console.log(response)
+      dispatch(updateProduct(response))
+      setIsVisibleDialog(true)
+    } catch (error) {
+      dispatch(setSnackBar({
+        open: true,
+        title: error.response.data
+      }))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleUpdateProduct = () => {
+    const payload ={
+      name: productName,
+      price: Number(priceProduct),
+      description: informationProduct,
+      origin: origin,
+      manufacturer: manufacturer,
+      manufacturerPrice: Number(manufacturerPrice),
+      imageProduct: image
+    }
+
+    callApi(payload)
   }
 
   return (
@@ -107,12 +140,13 @@ const EditProduct = () => {
           </Pressable>
         </View>
         <View style={styles.imageWrapper}>
-          <PrimaryButton title={"Save"} handleOnPress={() => toggleDialog()} />         
+          <PrimaryButton title={"Save"} handleOnPress={() => handleUpdateProduct()} />         
         </View>
         <MyDialog content={"update product information successfully!"} titleButton={"Got it"} isVisibleDialog={isVisibleDialog} handleOnPress={() => { 
         toggleDialog()
         navigation.goBack()
       }} />
+      <MyDialogLoading isVisible={loading} />
       </View>
     </TouchableWithoutFeedback>
   )

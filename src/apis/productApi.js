@@ -9,6 +9,9 @@ const productApi =  {
     },
     deleteProduct(productId) {
         return axiosClient.delete(`products/${productId}`)
+    },
+    updateProduct(productId, payload) {
+        return axiosClient.put(`products/${productId}`, payload)
     }
 }
 

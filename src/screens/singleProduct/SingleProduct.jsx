@@ -18,6 +18,7 @@ import { setSnackBar } from 'src/redux/slices/snackBarSlice'
 const SingleProduct = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
+
   const product = useSelector(state => state.product.product)
   const { productId } = useRoute().params
   const [isVisibleDialog, setIsVisibleDialog] = useState(false);
@@ -55,7 +56,7 @@ const SingleProduct = () => {
           <Image source={{ uri: product.imageProduct }} resizeMode="contain" style={styles.image} /> :
           <Image source={productDefaultImage} resizeMode="contain" style={styles.image} />}
         <View style={styles.priceAndTitle}>
-          <MyText title={product.name} numberOfLines={2} variant="h1" color={Color.PRIMARY_YELLOW_COLOR} style={{ flex: 1, textAlign: "left" }} />
+          <MyText title={product.name || ""} numberOfLines={2} variant="h1" color={Color.PRIMARY_YELLOW_COLOR} style={{ flex: 1, textAlign: "left" }} />
           <MyText title={`${FormatMoney(product.price)} đ`} variant="h1" color={Color.PRIMARY_YELLOW_COLOR} style={{ flex: 1, textAlign: "right" }} />
         </View>
         <View style={styles.productContainer}>
